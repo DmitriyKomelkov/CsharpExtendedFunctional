@@ -1,62 +1,68 @@
-﻿using CSharpFunctionalExtensions;
+﻿#if NET5_0_OR_GREATER
+using System;
+using System.Threading.Tasks;
+using CSharpFunctionalExtensions;
 
-namespace Net.CsharpFunctional.BaseExtensions;
-
-public static partial class TryDoExtensions
+namespace CsharpExtendedFunctional
 {
-    public static async Task<Result<T>> TryDo<T>(this T self, Func<T, ValueTask> action)
+
+    public static partial class TryDoExtensions
     {
-        try
+        public static async Task<Result<T>> TryDo<T>(this T self, Func<T, ValueTask> action)
         {
-            await action(self);
-            return Result.Success<T>(self);
+            try
+            {
+                await action(self);
+                return Result.Success<T>(self);
+            }
+            catch (Exception e)
+            {
+                return Result.Failure<T>(e.Message);
+            }
         }
-        catch (Exception e)
-        {
-            return Result.Failure<T>(e.Message);
-        }
-    }
 
-    public static async Task<Result<T>> TryDo<T, TEx>(this T self, Func<T, ValueTask<TEx>> action)
-    {
-        try
+        public static async Task<Result<T>> TryDo<T, TEx>(this T self, Func<T, ValueTask<TEx>> action)
         {
-            await action(self);
-            return Result.Success<T>(self);
+            try
+            {
+                await action(self);
+                return Result.Success<T>(self);
+            }
+            catch (Exception e)
+            {
+                return Result.Failure<T>(e.Message);
+            }
         }
-        catch (Exception e)
-        {
-            return Result.Failure<T>(e.Message);
-        }
-    }
 
-    public static async Task<Result<T>> TryDo<T>(this Task<T> taskSelf, Func<T, ValueTask> action)
-    {
-        var self = await taskSelf;
+        public static async Task<Result<T>> TryDo<T>(this Task<T> taskSelf, Func<T, ValueTask> action)
+        {
+            var self = await taskSelf;
 
-        try
-        {
-            await action(self);
-            return Result.Success<T>(self);
+            try
+            {
+                await action(self);
+                return Result.Success<T>(self);
+            }
+            catch (Exception e)
+            {
+                return Result.Failure<T>(e.Message);
+            }
         }
-        catch (Exception e)
-        {
-            return Result.Failure<T>(e.Message);
-        }
-    }
 
-    public static async Task<Result<T>> TryDo<T, TEx>(this Task<T> taskSelf, Func<T, ValueTask<TEx>> action)
-    {
-        var self = await taskSelf;
+        public static async Task<Result<T>> TryDo<T, TEx>(this Task<T> taskSelf, Func<T, ValueTask<TEx>> action)
+        {
+            var self = await taskSelf;
 
-        try
-        {
-            await action(self);
-            return Result.Success<T>(self);
-        }
-        catch (Exception e)
-        {
-            return Result.Failure<T>(e.Message);
+            try
+            {
+                await action(self);
+                return Result.Success<T>(self);
+            }
+            catch (Exception e)
+            {
+                return Result.Failure<T>(e.Message);
+            }
         }
     }
 }
+#endif

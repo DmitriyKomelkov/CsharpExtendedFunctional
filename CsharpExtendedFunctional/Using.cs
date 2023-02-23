@@ -1,11 +1,14 @@
-﻿namespace Net.CsharpFunctional.BaseExtensions;
+﻿using System;
 
-public static partial class UsingExtensions
+namespace CsharpExtendedFunctional
 {
-    public static TOut Using<TIn, TOut>(this TIn self, Func<TIn, TOut> map) where TIn : IDisposable
+    public static partial class UsingExtensions
     {
-        var result = map(self);
-        self.Dispose();
-        return result;
+        public static TOut Using<TIn, TOut>(this TIn self, Func<TIn, TOut> map) where TIn : IDisposable
+        {
+            var result = map(self);
+            self.Dispose();
+            return result;
+        }
     }
 }

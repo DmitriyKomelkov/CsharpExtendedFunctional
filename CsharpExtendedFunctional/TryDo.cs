@@ -1,19 +1,22 @@
-﻿using CSharpFunctionalExtensions;
+﻿using System;
+using CSharpFunctionalExtensions;
 
-namespace Net.CsharpFunctional.BaseExtensions;
-
-public static partial class TryDoDoExtensions
+namespace CsharpExtendedFunctional
 {
-    public static Result<T> TryDo<T>(this T self, Action<T> action)
+
+    public static partial class TryDoExtensions
     {
-        try
+        public static Result<T> TryDo<T>(this T self, Action<T> action)
         {
-            action(self);
-            return Result.Success(self);
-        }
-        catch (Exception e)
-        {
-            return Result.Failure<T>(e.Message);
+            try
+            {
+                action(self);
+                return Result.Success(self);
+            }
+            catch (Exception e)
+            {
+                return Result.Failure<T>(e.Message);
+            }
         }
     }
 }

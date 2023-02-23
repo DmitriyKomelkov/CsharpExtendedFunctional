@@ -1,34 +1,42 @@
-﻿using CSharpFunctionalExtensions;
+﻿#if NET5_0_OR_GREATER
+using System;
+using System.Threading.Tasks;
+using CSharpFunctionalExtensions;
 
-namespace Net.CsharpFunctional.BaseExtensions;
-
-public static partial class TryTransformExtensions
+namespace CsharpExtendedFunctional
 {
-    public static async Task<Result<TOut>> TryTransform<TIn, TOut>(this TIn self, Func<TIn, ValueTask<TOut>> mapAsync)
-    {
-        try
-        {
-            var result = await mapAsync(self);
-            return Result.Success<TOut>(result);
-        }
-        catch (Exception e)
-        {
-            return Result.Failure<TOut>(e.Message);
-        }
-    }
 
-    public static async Task<Result<TOut>> TryTransform<TIn, TOut>(this Task<TIn> taskSelf, Func<TIn, ValueTask<TOut>> action)
+    public static partial class TryTransformExtensions
     {
-        var self = await taskSelf;
-
-        try
+        public static async Task<Result<TOut>> TryTransform<TIn, TOut>(this TIn self,
+            Func<TIn, ValueTask<TOut>> mapAsync)
         {
-            var result = await action(self);
-            return Result.Success<TOut>(result);
+            try
+            {
+                var result = await mapAsync(self);
+                return Result.Success<TOut>(result);
+            }
+            catch (Exception e)
+            {
+                return Result.Failure<TOut>(e.Message);
+            }
         }
-        catch (Exception e)
+
+        public static async Task<Result<TOut>> TryTransform<TIn, TOut>(this Task<TIn> taskSelf,
+            Func<TIn, ValueTask<TOut>> action)
         {
-            return Result.Failure<TOut>(e.Message);
+            var self = await taskSelf;
+
+            try
+            {
+                var result = await action(self);
+                return Result.Success<TOut>(result);
+            }
+            catch (Exception e)
+            {
+                return Result.Failure<TOut>(e.Message);
+            }
         }
     }
 }
+#endif

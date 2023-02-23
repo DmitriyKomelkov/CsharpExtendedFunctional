@@ -1,4 +1,7 @@
-﻿namespace CsharpExtendedFunctional
+﻿using System;
+using System.Threading.Tasks;
+
+namespace CsharpExtendedFunctional
 {
     public static partial class DoExtensions
     {

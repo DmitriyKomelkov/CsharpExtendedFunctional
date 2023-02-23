@@ -1,4 +1,6 @@
-﻿namespace CsharpExtendedFunctional
+﻿using System;
+
+namespace CsharpExtendedFunctional
 {
     public static partial class TransformExtensions
     {

@@ -1,11 +1,17 @@
-﻿namespace Net.CsharpFunctional.BaseExtensions;
+﻿using System;
+using System.Threading.Tasks;
 
-public static partial class UsingExtensions
+namespace CsharpExtendedFunctional
 {
-    public static async Task<TOut> Using<TIn, TOut>(this TIn self, Func<TIn, Task<TOut>> map) where TIn : IDisposable
+
+    public static partial class UsingExtensions
     {
-        var result = await map(self);
-        self.Dispose();
-        return result;
+        public static async Task<TOut> Using<TIn, TOut>(this TIn self, Func<TIn, Task<TOut>> map)
+            where TIn : IDisposable
+        {
+            var result = await map(self);
+            self.Dispose();
+            return result;
+        }
     }
 }
