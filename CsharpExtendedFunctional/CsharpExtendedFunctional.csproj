@@ -1,10 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
 	  <TargetFrameworks>net472;netstandard2.0;net5.0;net6.0;net7.0</TargetFrameworks>
 	  <LangVersion>9.0</LangVersion>
 	  <Authors>Dmytro Komelkov</Authors>
-	  <BaseOutputPath>D:\LocalDll\CsharpFunctional</BaseOutputPath>
 	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
