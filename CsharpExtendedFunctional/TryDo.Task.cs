@@ -50,13 +50,21 @@ namespace CsharpExtendedFunctional
                 return Result.Failure<T>(e.Message);
             }
         }
-
+        /// <summary>
+        /// Getting param T from Task (inside try catch.
+        /// Execute async action with argument of T type it try catch too.
+        /// If no exceptions happened return success result.
+        /// In another case return failure result.  
+        /// </summary>
+        /// <typeparam name="T">Generic type</typeparam>
+        /// <param name="taskSelf">arg of Task of T type</param>
+        /// <param name="action">Func with T arg, returns Task</param>
+        /// <returns>Instance of Result of T type</returns>
         public static async Task<Result<T>> TryDo<T>(this Task<T> taskSelf, Func<T, Task> action)
         {
-            var self = await taskSelf;
-
             try
             {
+                var self = await taskSelf;
                 await action(self);
                 return Result.Success(self);
             }
