@@ -73,7 +73,14 @@ namespace CsharpExtendedFunctional
                 return Result.Failure<T>(e.Message);
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T">Generic type</typeparam>
+        /// <typeparam name="TEx">Generic type for Func</typeparam>
+        /// <param name="taskSelf">arg of Task of T type</param>
+        /// <param name="action">Func with T arg, returns Task</param>
+        /// <returns>Instance of Result of T type</returns>
         public static async Task<Result<T>> TryDo<T, TEx>(this Task<T> taskSelf, Func<T, Task<TEx>> action)
         {
             var self = await taskSelf;
